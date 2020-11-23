@@ -8,27 +8,23 @@ const FirstQuarter = () => {
   const { positions } = globalState.team;
   const { players } = globalState;
 
-  const positionOptions = positions.map((position) => {
-    return {
-      label: position.title,
-      value: position.title,
-      key: position.id,
-    };
-  });
+  const positionOptions = positions.map((position) => ({
+    label: position.title,
+    value: position.title,
+    key: position.id,
+  }));
 
   const [playerChosen, setPlayerChosen] = useState({});
   const [positionChosen, setPositionChosen] = useState({});
   const [selectedPlayers, setSelectedPlayers] = useState([]);
   const [selectedPositions, setSelectedPositions] = useState([]);
 
-  const playerOptions = players.map((player) => {
-    return {
-      label: player.firstname,
-      value: player.firstname,
-      key: player.id,
-      player,
-    };
-  });
+  const playerOptions = players.map((player) => ({
+    label: player.firstname,
+    value: player.firstname,
+    key: player.id,
+    player,
+  }));
 
   const handlePlayerSelect = (player, key) => {
     const newPlayer = {

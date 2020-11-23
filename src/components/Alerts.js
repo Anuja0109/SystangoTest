@@ -9,7 +9,10 @@ const Alerts = () => {
       {alerts !== undefined &&
         alerts.length > 0 &&
         alerts.map((alert) => (
-          <span className="span-error text-danger alert" key={alert.id}>
+          <span
+            className="span-error d-inline-block text-danger alert"
+            key={alert.id}
+          >
             {alert.msg}
           </span>
         ))}

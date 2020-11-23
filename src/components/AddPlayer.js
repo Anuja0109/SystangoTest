@@ -84,13 +84,11 @@ const AddPlayer = () => {
   };
 
   // options for React-select component
-  const positionOptions = globalState.team.positions.map((position) => {
-    return {
-      label: position.title,
-      value: position.title,
-      key: position.id,
-    };
-  });
+  const positionOptions = globalState.team.positions.map((position) => ({
+    label: position.title,
+    value: position.title,
+    key: position.id,
+  }));
 
   // Form Submission
   const handleSubmit = (e) => {

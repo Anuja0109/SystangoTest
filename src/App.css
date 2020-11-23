@@ -1,38 +1,169 @@
-.App {
-  text-align: center;
+.add-ui-page{
+  min-height:100vh;
+}
+.add-ui-page .add-form{
+
+  margin-top:80px;
+}
+.add-ui-page .top-title{
+  background:#00c674;
+}
+.add-ui-page .form-body{
+  height:auto;
+  overflow:visible;
+}
+.custom-input{
+  border:0px;
+  border-radius:0px;
+  border-bottom:2px solid #444;
+  box-shadow:0px 0px 0px 0px;
+  height:35px;
+  background-color:#fff;
+}
+.custom-input:hover, .custom-input:focus{
+  box-shadow:0px 0px 0px 0px;
+  border-color:#00c674;
+}
+.custom-chossen .css-2o5izw, .custom-chossen .css-2o5izw:hover{
+  border-bottom:2px solid #00c674 !important;
+  border-color:transparent;
+  box-shadow: 0px 0px 0px;
+}
+.react-select__menu:hover{
+  background-color:#f1f1f1 !important;
+}
+.react-datepicker-wrapper{
+  width:100%;
+}
+.custom-chossen .css-1aya2g8{
+  border-bottom:2px solid #444 !important;
+  border:0px;
+  background-color:#fff;
+  border-radius: 0px;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+.add-ui-page  .btn-theme{
+ background-color:#00a571;
+ color:#fff;
+ padding: 10px 25px 5px;
+ border-radius:50px;
+  font-family:'CalibreM';
+  font-weight:bold;
+ transition: ease 0.5s;
+  border:1px solid transparent;
+  text-transform:uppercase;
+}
+.add-ui-page  .btn-theme:hover, .btn-theme:focus{
+ background: #fff;
+ color:#00a571;
+ text-decoration: none;
+  border-color:#00a571;
+  box-shadow: 0px 0px 0px 0px;
+}
+.form-footer button{
+  border-radius: 50px;
+  font-size: 16px;
+  padding:10px 25px;
+}
+body{
+  position: relative;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+.navbar{
+  background: #00a571;
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
+.navbar-brand{
+  color: #E1C340;
+}
+.nav-link, nav-link:hover{
   color: white;
+  font-weight: bold;
+  text-decoration: none;
 }
 
-.App-link {
-  color: #61dafb;
+.custom-input{
+  border:0px;
+  border-radius:0px;
+  border-bottom:2px solid #444;
+  box-shadow:0px 0px 0px 0px;
+  height:35px;
+  background-color:#fff;
+}
+.custom-input:hover, .custom-input:focus{
+  box-shadow:0px 0px 0px 0px;
+  border-color:#00c674;
+}
+.custom-chossen .css-2o5izw, .custom-chossen .css-2o5izw:hover{
+  border-bottom:2px solid #00c674 !important;
+  border-color:transparent;
+  box-shadow: 0px 0px 0px;
+}
+.custom-chossen .css-1aya2g8{
+  border-bottom:2px solid #444 !important;
+  border:0px;
+  background-color:#fff;
+  border-radius: 0px;
+  border-style: none;
+  box-shadow:0px 0px 0px 0px;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.add-ui-page  .btn-theme{
+ background-color:#00a571;
+ color:#fff;
+ padding: 9px 22px 7px;
+ border-radius:50px;
+  font-family:'CalibreM';
+  font-weight:bold;
+ transition: ease 0.5s;
+  border:1px solid transparent;
+  text-transform:uppercase;
+  float: right;
+}
+.add-ui-page  .btn-theme:hover, .btn-theme:focus{
+ background: #fff;
+ color:#00a571;
+ text-decoration: none;
+  border-color:#00a571;
+  box-shadow: 0px 0px 0px 0px;
+}
+.form-footer button.kep-add-facebook{
+  border-radius: 50px;
+  font-size: 16px;
+  padding:10px 25px;
+}
+.form-control {
+  display: block;
+  width: 100%;
+  height: calc(1.5em + .75rem + 2px);
+  padding: .375rem .75rem;
+  font-size: 1rem;
+  font-weight: 400;
+  line-height: 1.5;
+  color: #495057;
+  background-color: #fff;
+  background-clip: padding-box;
+  transition: border-color .15s ease-in-out,
+  box-shadow .15s ease-in-out;
+  border: 0px;
+  border-radius: 0%;
+  box-shadow:0px 0px 0px 0px !important;
+  border-bottom: 2px solid #444 !important;
+}
+
+.custom-tablerow{
+  width: 100%;
+}
+
+.custom-td{
+  width: 400px;
+}
+
+.css-yk16xz-control {
+  border-bottom: 2px solid !important;
+  border: 0;
+  border-style: none;
+  border-radius: 0% !important;
+  border-color: white;
+  box-shadow:0px 0px 0px 0px;
 }
