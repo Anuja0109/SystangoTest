@@ -20,6 +20,14 @@
   height:35px;
   background-color:#fff;
 }
+.custom-error{
+  border:0px;
+  border-radius:0px;
+  border-bottom:2px solid rgb(122, 29, 29);
+  box-shadow:0px 0px 0px 0px;
+  height:35px;
+  background-color:#fff;
+}
 .custom-input:hover, .custom-input:focus{
   box-shadow:0px 0px 0px 0px;
   border-color:#00c674;
@@ -75,8 +83,10 @@ body{
 
 .navbar-brand{
   color: #E1C340;
+  font-weight: bolder;
+  font-style: italic;
 }
-.nav-link, nav-link:hover{
+.nav-link, .nav-link:hover{
   color: white;
   font-weight: bold;
   text-decoration: none;
@@ -92,7 +102,7 @@ body{
 }
 .custom-input:hover, .custom-input:focus{
   box-shadow:0px 0px 0px 0px;
-  border-color:#00c674;
+  border-bottom:2px solid #00a571 !important;
 }
 .custom-chossen .css-2o5izw, .custom-chossen .css-2o5izw:hover{
   border-bottom:2px solid #00c674 !important;
@@ -140,15 +150,19 @@ body{
   font-size: 1rem;
   font-weight: 400;
   line-height: 1.5;
-  color: #495057;
   background-color: #fff;
   background-clip: padding-box;
   transition: border-color .15s ease-in-out,
   box-shadow .15s ease-in-out;
-  border: 0px;
-  border-radius: 0%;
+  border: 1px solid white !important;
+  border-radius:0px !important;
+  border-bottom:2px solid #444 !important;
   box-shadow:0px 0px 0px 0px !important;
-  border-bottom: 2px solid #444 !important;
+  height:35px;
+  background-color:#fff;
+}
+.form-control:hover{
+  border-bottom:2px solid #00a571 !important;
 }
 
 .custom-tablerow{
@@ -166,4 +180,31 @@ body{
   border-radius: 0% !important;
   border-color: white;
   box-shadow:0px 0px 0px 0px;
+}
+
+.css-yk16xz-control {
+  border-bottom: 2px solid #444 !important;
+  border: 0;
+  border-style: none;
+  border-radius: 0% !important;
+  border-color: white !important;
+  box-shadow: 0px 0px 0px 0px;
+}
+
+.css-2b097c-container {
+  position: relative;
+  box-sizing: border-box;
+  border-bottom: #444 2px solid!important;
+}
+
+
+.css-1pahdxg-control{
+  border-color: white !important;
+  box-shadow: 0 0 0 0 !important;
+}
+
+.css-1pahdxg-control:hover{
+  box-shadow:0px 0px 0px 0px !important;
+  /* border-color: white !important; */
+  border-bottom:2px solid #00a571 !important;
 }

@@ -1,5 +1,4 @@
 import React, { useState, useRef } from 'react';
-// import PropTypes from 'prop-types';
 import Select from 'react-select';
 import { v4 as uuidv4 } from 'uuid';
 import { useStore } from '../custom-store/store';
@@ -40,7 +39,8 @@ const AddPlayer = () => {
       const alertF = {
         id: 'FNR',
         msg: '*First Name is Required.',
-        status: true,
+        for: 'firstname',
+        classToBeApplied: 'custom-error',
       };
       dispatch('ADD_ALERT', alertF);
     } else dispatch('REMOVE_ALERT', 'FNR');
@@ -48,7 +48,8 @@ const AddPlayer = () => {
       const alertL = {
         id: 'LNR',
         msg: '*Last Name is Required.',
-        status: true,
+        for: 'lastname',
+        classToBeApplied: 'custom-error',
       };
       dispatch('ADD_ALERT', alertL);
     } else dispatch('REMOVE_ALERT', 'LNR');
@@ -57,7 +58,8 @@ const AddPlayer = () => {
       const alertH = {
         id: 'HIR',
         msg: '*Height is Required in cms.',
-        status: true,
+        for: 'height',
+        classToBeApplied: 'custom-error',
       };
       dispatch('ADD_ALERT', alertH);
     } else dispatch('REMOVE_ALERT', 'HIR');
@@ -66,7 +68,8 @@ const AddPlayer = () => {
       const alertP = {
         id: 'PIR',
         msg: '*Atleast One Position is Required.',
-        status: true,
+        for: 'position',
+        classToBeApplied: 'custom-error',
       };
       dispatch('ADD_ALERT', alertP);
     } else dispatch('REMOVE_ALERT', 'PIR');
@@ -90,6 +93,8 @@ const AddPlayer = () => {
     key: position.id,
   }));
 
+  const { alerts } = globalState;
+
   // Form Submission
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -101,6 +106,8 @@ const AddPlayer = () => {
       positions: selectedPositions,
     };
     validate(newPlayer);
+    // eslint-disable-next-line no-console
+    console.log('alerts', alerts);
     dispatch('ADD_PLAYER', newPlayer);
     clearForm();
   };

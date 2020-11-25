@@ -3,11 +3,14 @@ import { initStore } from '../store';
 
 const configureStore = () => {
   const actions = {
-    // COMPOSE_TEAM: (currentState, team) => {
-    //   const updatedTeam = { ...currentState.team.teamSelected };
-    //   updatedTeam = [...updatedTeam, team];
-    //   updatedState =
-    // },
+    COMPOSE_TEAM: (currentState, newTeam) => {
+      const updatedTeam = {
+        ...currentState.team,
+        teamSelected: newTeam,
+        positions: currentState.team.positions,
+      };
+      return { team: updatedTeam };
+    },
   };
   initStore(actions, {
     team: {

@@ -1,13 +1,19 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { useHistory } from 'react-router-dom';
 import Select from 'react-select';
 import { useStore } from '../custom-store/store';
+import MemoizedAlert from './Alerts';
 
 const FirstQuarter = () => {
-  const globalState = useStore()[0];
+  const [globalState, dispatch] = useStore();
 
   const { positions } = globalState.team;
   const { players } = globalState;
 
+  const history = useHistory();
+
+  // eslint-disable-next-line no-console
+  console.log(globalState.team);
   const positionOptions = positions.map((position) => ({
     label: position.title,
     value: position.title,
@@ -18,13 +24,22 @@ const FirstQuarter = () => {
   const [positionChosen, setPositionChosen] = useState({});
   const [selectedPlayers, setSelectedPlayers] = useState([]);
   const [selectedPositions, setSelectedPositions] = useState([]);
+  const [selectedTeam, setSelectedTeam] = useState([]);
 
   const playerOptions = players.map((player) => ({
     label: player.firstname,
     value: player.firstname,
     key: player.id,
-    player,
+    playerPositions: player.positions,
   }));
+
+  // func to check & replace the value of player or Position if repeatedly selected again on same select.
+  // Bug here.
+  // const ifPresent = (items, newObj) => {
+  //   const res = items.findIndex((i) => i.key === newObj.key);
+  //   console.log(res);
+  //   return items.map((pl) => (pl.key !== newObj.key ? pl : newObj));
+  // };
 
   const handlePlayerSelect = (player, key) => {
     const newPlayer = {
@@ -33,34 +48,88 @@ const FirstQuarter = () => {
     };
 
     setPlayerChosen(newPlayer);
-    setSelectedPlayers((previousPlayers) =>
-      previousPlayers.filter((p) => {
-        if (p.id !== player.id) return [...previousPlayers, newPlayer];
-
-        return previousPlayers;
-      })
-    );
+    setSelectedPlayers((prevPlayers) => [...prevPlayers, newPlayer]);
+  };
+  // Func to Check if Players are repeating in selectedPlayers
+  // eslint-disable-next-line no-shadow
+  const isPlayerRepeated = (players) => {
+    const valueArr = players.map((player) => {
+      return player.player.key;
+    });
+    const hasDuplicate = valueArr.some((item, idx) => {
+      return valueArr.indexOf(item) !== idx;
+    });
     // eslint-disable-next-line no-console
-    console.log(selectedPlayers);
+    console.log('hasDuplicates', hasDuplicate);
+    return hasDuplicate;
+  };
+  // Func to Check if Positions are repeating in selectedPositions
+  // eslint-disable-next-line no-shadow
+  const isPositionRepeated = (positions) => {
+    const valueArr = positions.map((position) => {
+      return position.position.key;
+    });
+    const hasDuplicate = valueArr.some((item, idx) => {
+      return valueArr.indexOf(item) !== idx;
+    });
     // eslint-disable-next-line no-console
-    console.log(playerChosen);
+    console.log('hasDuplicates', hasDuplicate);
+    return hasDuplicate;
   };
 
-  // const validate = (position, player) => {
-  //   // const res = player.positions.find(p => p.id === position.id;
-  //   if (player) {
-  //     // eslint-disable-next-line no-console
-  //     console.log(
-  //       'validate',
-  //       position.position,
-  //       player.player.player.positions
-  //     );
-  //     // const playerPositions = player.player.player.positions;
-  //     // const pos = position.position.key;
-  //     // const res = playerPositions.find((p) => p.key === pos);
-  //     // console.log(res);
-  //   }
-  // };
+  // function for merging players & position array with a common Key
+  // eslint-disable-next-line no-shadow
+  const mergeTwoArraysByKey = (selectedPlayers, selectedPositions) =>
+    selectedPlayers.map((itm) => ({
+      ...selectedPositions.find((item) => item.key === itm.key && item),
+      ...itm,
+    }));
+
+  // eslint-disable-next-line no-shadow
+  const validate = (selectedPlayers, selectedPositions) => {
+    const ifPlayerRepeated = isPlayerRepeated(selectedPlayers);
+    const ifPositionRepeated = isPositionRepeated(selectedPositions);
+    if (ifPlayerRepeated === false && ifPositionRepeated === false) {
+      // eslint-disable-next-line no-shadow
+      const newTeamArr = mergeTwoArraysByKey(
+        selectedPlayers,
+        selectedPositions
+      );
+      const newTeam = newTeamArr.forEach((el) =>
+        // eslint-disable-next-line eqeqeq
+        el.player.playerPositions.includes(el.position.key)
+      );
+      // eslint-disable-next-line no-console
+      console.log(newTeam, 'newTeam');
+      if (newTeam !== undefined && newTeamArr.length === positions.length)
+        setSelectedTeam(newTeamArr);
+      else
+        dispatch('ADD_ALERT', {
+          id: 'VAL',
+          msg:
+            '*Please Check if Positions selected for players are Included in their preferred Positions.',
+          for: 'PlayersPosition',
+          classToBeApplied: 'custom-error',
+        });
+    } else
+      dispatch('ADD_ALERT', {
+        id: 'REP',
+        msg: '*Players & Positions selected should be unique.',
+        for: 'PPRepeat',
+        classToBeApplied: 'custom-error',
+      });
+  };
+
+  useEffect(() => {
+    // eslint-disable-next-line no-console
+    console.log('playerChosen', playerChosen);
+    // eslint-disable-next-line no-console
+    console.log('selectedPlayers', selectedPlayers);
+    // eslint-disable-next-line no-console
+    console.log(positionChosen);
+    // eslint-disable-next-line no-console
+    console.log('selectedPositions', selectedPositions);
+  }, [selectedPositions, selectedPlayers, playerChosen, positionChosen]);
 
   const handlePositionSelect = (position, key) => {
     const newPosition = {
@@ -70,32 +139,27 @@ const FirstQuarter = () => {
     // eslint-disable-next-line no-console
     console.log(position, key);
     setPositionChosen(newPosition);
-    // eslint-disable-next-line no-console
-    console.log(positionChosen);
-    setSelectedPositions((previousPositions) =>
-      previousPositions.filter((p) => {
-        if (p.id !== position.id) return [...previousPositions, newPosition];
-
-        return previousPositions;
-      })
+    setSelectedPositions(
+      (prevPositions) => [...prevPositions, newPosition]
+      // prevPositions.map((ps) => (ps.key !== newPosition.key ? ps : newPosition))
     );
-    // eslint-disable-next-line no-console
-    console.log(selectedPositions);
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    validate(selectedPlayers, selectedPositions);
+    console.log('before dispatch', selectedTeam);
+    if (selectedTeam !== [] || undefined)
+      dispatch('COMPOSE_TEAM', selectedTeam);
+    history.push('/team');
+
+    return null;
   };
 
-  // useEffect(() => {
-  //   // let arr3 = arr1.map((item, i) => Object.assign({}, item, arr2[i]));
-  //   // const teamArray = selectedPlayers.map((player, key) => ({
-  //   //   ...player,
-  //   //   ...selectedPositions[key],
-  //   // }));
-  //   validate(positionChosen, playerChosen);
-  //   // console.log(teamArray);
-  // }, [playerChosen, positionChosen]);
+  useEffect(() => {
+    // eslint-disable-next-line no-console
+    console.log(selectedTeam);
+  }, [selectedTeam]);
 
   return (
     <div className="add-ui-page d-flex align-item-center justify-content-center w-100">
@@ -119,18 +183,13 @@ const FirstQuarter = () => {
                                 className="basic-single"
                                 classnameprefix="select.."
                                 placeholder="Select Player"
-                                // isSearchable={true}
-                                name="player"
+                                isSearchable
+                                name={`player${i}`}
                                 options={playerOptions}
                                 value={playerOptions.value}
                                 onChange={(e) => handlePlayerSelect(e, i)}
                                 onBlur={(e) => e.preventDefault()}
                               />
-                              {/* {showError && (
-                      <span className="span-error text-danger">
-                        Atleast One Position is Required.
-                      </span>
-                    )} */}
                             </div>
                           </div>
                         </td>
@@ -142,17 +201,12 @@ const FirstQuarter = () => {
                                 classnameprefix="select.."
                                 placeholder="Select Position"
                                 // isSearchable={true}
-                                name="position"
+                                name={`position${i}`}
                                 options={positionOptions}
                                 value={positionOptions.value}
                                 onChange={(e) => handlePositionSelect(e, i)}
                                 onBlur={(e) => e.preventDefault()}
                               />
-                              {/* {showError && (
-                      <span className="span-error text-danger">
-                        Atleast One Position is Required.
-                      </span>
-                    )} */}
                             </div>
                           </div>
                         </td>
@@ -170,6 +224,7 @@ const FirstQuarter = () => {
                 </button>
               </div>
             </form>
+            <MemoizedAlert />
           </div>
         </div>
       </div>
